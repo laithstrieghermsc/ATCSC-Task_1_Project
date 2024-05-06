@@ -1,0 +1,43 @@
+$s-headers
+$s-navbar
+    <div class="row justify-content-center" style="margin-left: 0;margin-right: 0">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body text-center"><div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-4 text-left">
+            <h4>Daily Summary</h4>
+            <p>Today's total income: $$m-total</p>
+            <p>Pizzas:</p>
+            <ul>
+                $m-pizzas
+            </ul>
+            <p>Deliveries Made: $m-deliveries</p>
+            <p>Tax Paid: $$m-tax</p>
+        </div>
+        <div class="col-lg-8">
+            <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">MemberID</th>
+      <th scope="col">Order</th>
+      <th scope="col">Delivery</th>
+      <th scope="col">Sub Total</th>
+      <th scope="col">Discount</th>
+      <th scope="col">Total</th>
+      <th scope="col">Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    $r-records
+  </tbody>
+</table>
+        </div>                </div>
+            </div>
+    </div>
+    </div>
+</div>
+                    </div>
+
+$s-footers

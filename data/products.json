@@ -1,0 +1,40 @@
+{
+    "menu": [
+        {
+            "name": "Pepperoni",
+            "price": 21.00,
+            "id": "pepperoni",
+            "description": "Classic favorite with zesty tomato sauce and crispy pepperoni."
+        },
+        {
+            "name": "Chicken Supreme",
+            "price": 23.50,
+            "id": "chicken_supreme",
+            "description": "Tender chicken, bell peppers, and onions on a medley of cheeses."
+        },
+        {
+            "name": "BBQ Meat Lovers",
+            "price": 25.50,
+            "id": "BBQ_Meat_Lovers",
+            "description": "Meaty masterpiece with barbecue-seasoned beef, bacon, and sausage."
+        },
+        {
+            "name": "Veggie Supreme",
+            "price": 22.50,
+            "id": "veg_supreme",
+            "description": "Colorful veggies—spinach, mushrooms, bell peppers—on whole wheat crust."
+        },
+        {
+            "name": "Hawaiian",
+            "price": 19.00,
+            "id": "hawaiian",
+            "description": "Sweet pineapple and savory ham for a tropical pizza experience."
+        },
+        {
+            "name": "Margherita",
+            "price": 18.50,
+            "id": "margherita",
+            "description": "Italian classic with fresh basil, tomatoes, and creamy mozzarella."
+        }
+    ]
+}

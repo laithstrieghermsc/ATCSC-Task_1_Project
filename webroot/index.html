@@ -1,34 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pizza Order System</title>
-</head>
-<body>
-    <header>
-        <h1>Welcome to Our Pizza Shop</h1>
-    </header>
-
-    <section>
-        <h2>Choose Your Pizza</h2>
-        <p>Select your favorite toppings:</p>
-        <ul>
-            <li>${test}</li>
-            <li>${test}</li>
-            <!-- Add more toppings as needed -->
-        </ul>
-    </section>
-
-    <section>
-        <h2>Order Summary</h2>
-        <p>Your pizza size: ${test}</p>
-        <p>Total cost: ${test}</p>
-    </section>
-
-    <footer>
-        <p>Thank you for ordering with us!</p>
-    </footer>
-
-</body>
-</html>
+$s-headers
+$s-navbar
+    <div class="row justify-content-center" style="margin-left: 0;margin-right: 0">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">$v-welcome</h5>
+                        <p class="card-text">$v-homemessage</p>
+                    </div>
+                </div>
+            </div>
+    </div>
+$s-footers

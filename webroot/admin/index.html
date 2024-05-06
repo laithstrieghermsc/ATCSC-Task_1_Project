@@ -1,0 +1,20 @@
+$s-headers
+$s-navbar
+    <div class="row justify-content-center" style="margin-left: 0;margin-right: 0">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body text-center">
+
+                        <form action="/admin" method="post">
+                          <div class="form-group">
+                            <label for="password1">Admin Password</label>
+                            <input type="password" class="form-control" id="password1" placeholder="Password" name="password1">
+                              $v-invalidpass
+                          </div>
+                          <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    </div>
+$s-footers
