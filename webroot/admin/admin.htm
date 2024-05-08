@@ -1,43 +1,57 @@
 $s-headers
 $s-navbar
-    <div class="row justify-content-center" style="margin-left: 0;margin-right: 0">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body text-center"><div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-4 text-left">
-            <h4>Daily Summary</h4>
-            <p>Today's total income: $$m-total</p>
-            <p>Pizzas:</p>
-            <ul>
-                $m-pizzas
-            </ul>
-            <p>Deliveries Made: $m-deliveries</p>
-            <p>Tax Paid: $$m-tax</p>
-        </div>
-        <div class="col-lg-8">
-            <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">MemberID</th>
-      <th scope="col">Order</th>
-      <th scope="col">Delivery</th>
-      <th scope="col">Sub Total</th>
-      <th scope="col">Discount</th>
-      <th scope="col">Total</th>
-      <th scope="col">Time</th>
-    </tr>
-  </thead>
-  <tbody>
-    $r-records
-  </tbody>
-</table>
-        </div>                </div>
+<div class="row justify-content-center" style="margin-left: 0;margin-right: 0">
+    <div class="col-md-10">
+         <div class="card">
+             <div class="card-body text-center">
+                 <div class="container-fluid">
+                     <div class="row">
+                         <div class="col-lg-4 text-left">
+                             <h4>Daily Summary</h4>
+                             <p>Today's total income: $$m-total</p>
+                             <p>Pizzas:</p>
+                             <ul>
+                                 $m-pizzas
+                             </ul>
+                             <p>Deliveries Made: $m-deliveries</p>
+                             <p>Tax Paid: $$m-tax</p>
+                             <p></p>
+                             <h4>Columns</h4>
+                             <p>#</p>
+                             <.MemberID	Order	Delivery	Sub Total	Discount	Total	Time
+                         </div>
+                         <div class="col-lg-8">
+                             <table class="table table-hover table-striped table-responsive mw-100">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <p>#: Order index.</p>
+                                        <p>MemberID: Membership numeric ID.</p>
+                                        <p>Order: Pizzas bought. (pizzaID: amount)</p>
+                                        <p>Delivery: Delivered pizza.</p>
+                                        <p>Sub Total: Sub Total, before tax, delivery and discounts.</p>
+                                        <p>Discount: Discount percentage, -5% for members and -5% for orders over $100.</p>
+                                        <p>Total: Total charged to user, pizzas w/ delivery, discounts and 10% tax</p>
+                                        <p>Time</p>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                   $r-records
+                                </tbody>
+                             </table>
+                         </div>
+                     </div>
+                 </div>
             </div>
-    </div>
+        </div>
     </div>
 </div>
-                    </div>
+<style>
+
+.table td,
+.table th {
+   white-space: nowrap;
+   width: 1%;
+}
+</style>
 
 $s-footers

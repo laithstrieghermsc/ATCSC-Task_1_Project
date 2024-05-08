@@ -12,61 +12,64 @@ $v-menu
                         <h5 class="card-title">Welcome!</h5>
                         <p class="card-text">Please complete your order. For deliveries, you will be charged by the delivery driver. Membership discounts will be applied on payment.</p>
                         <p id="total"></p>
-						<p><input class="form-check-input" type="checkbox" value="yes" name="deliv" id="deliv">
-						  <label class="form-check-label" for="deliv">
+						<p><input class="form-check-input" type="checkbox" value="yes" name="delivery" id="delivery">
+						  <label class="form-check-label" for="delivery">
 							Delivery
 						  </label>
 							</p>
 
-						<label for="memno">Membership Number</label>
-						<input type="text" id="memno" class="form-control" placeholder="Membership Number" name="memno">
+						<label for="membership_number">Membership Number</label>
+						<input type="text" id="membership_number" class="form-control" placeholder="Membership Number" name="membership_number">
                         <button type="submit" class="btn btn-primary">Submit Order</button>
+                        $v-submitted
                     </div>
                 </div>
             </div>
 	  </div>
 		  </form>
-<script>const cards = document.querySelectorAll('.pizzaitem');
+<script>
+    // Do I have to comment this :D
+    const cards = document.querySelectorAll('.pizzaitem');
+    function total() {
+      let totalPrice = 0;
 
+      cards.forEach((card) => {
+        // Get the price and quantity for the current card
+        const priceElement = card.querySelector('.pricevalue');
+        const price = parseFloat(priceElement.textContent.slice(1)); // Remove the dollar sign and convert to a number
 
-function total() {
-  let totalPrice = 0;
+        const quantityInput = card.querySelector('.itemcount');
+        const quantity = parseFloat(quantityInput.value);
 
-  cards.forEach((card) => {
-    // Get the price and quantity for the current card
-    const priceElement = card.querySelector('.pricevalue');
-    const price = parseFloat(priceElement.textContent.slice(1)); // Remove the dollar sign and convert to a number
+        // Calculate the subtotal for the current card
+        const subtotal = price * quantity;
 
-    const quantityInput = card.querySelector('.itemcount');
-    const quantity = parseFloat(quantityInput.value);
-
-    // Calculate the subtotal for the current card
-    const subtotal = price * quantity;
-
-    // Update the total price
-    totalPrice += subtotal;
-  });
-  if ($("#deliv").is(":checked")) {
-    totalPrice += 8
-  }
-  return totalPrice;
-}
-function update(value) {
-    if (value>100) {
-        extras = "5% off!! ";
-        value = value * 0.95
-    } else {
-        extras = "";
+        // Update the total price
+        totalPrice += subtotal;
+      });
+      if ($("#delivery").is(":checked")) {
+          // add delivery cost
+        totalPrice += 8
+      }
+      return totalPrice;
     }
-  document.getElementById('total').textContent = `${extras}Subtotal: $${value.toFixed(2)} Total Incl GST: $${(value*1.1).toFixed(2)}`
-}
+    function update(value) {
+        var extras;
+        if (value > 100) {
+            extras = "5% off!! ";
+            value = value * 0.95
+        } else {
+            extras = "";
+        }
+      document.getElementById('total').textContent = `${extras}Subtotal: $${value.toFixed(2)} Total Incl GST: $${(value*1.1).toFixed(2)}`
+    }
 
 
-$(".itemcount").on("change keyup paste", function(){
-  update(total())
-})
-$("#deliv").on("change keyup paste", function(){
-  update(total())
-})
+    $(".itemcount").on("change keyup paste", function(){
+      update(total())
+    })
+    $("#delivery").on("change keyup paste", function(){
+      update(total())
+    })
 </script>
 $s-footers
