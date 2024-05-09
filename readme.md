@@ -1182,6 +1182,7 @@ Deployment Stage (Review)
 2. Order serving
    - Another possible feature that could by added is the ability for the admins of PapaPizza or its employees, to remove or otherwise mark completed orders via a 'serve' button or similar.
    - My program is set out in a way in which this is not too difficult to implement, as some minor modifications to `AdminHandler`, `do_POST()` and `admin/admin.htm` can make this happen
+3. Not linux/unix compatible, some simple modifications can be made to file retrieval statements to make program cross-compatible.
 
 ### Retrospective and Evaluation of the Development Process for the PapaPizza Ordering System
 
