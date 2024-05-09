@@ -208,8 +208,9 @@ class Handler:
         """validate and handle"""
         if self.validate():
             print(
-                f"Serving '{self.path}'{f" as '{self.context.path}'" if self.path != self.context.path else ""} from'" +
-                f" {self.full_path}' to {self.context.client_address} using handler '{self.__class__.__name__}'")
+                "Serving '%s'%s from' %s' to %s using handler '%s'" %
+                (self.path, ((" as '%s'" % self.context.path) if self.path != self.context.path else ""),
+                 self.full_path, self.context.client_address, self.__class__.__name__))
             self.handle()
         else:
             raise HandlerValidationError(self)
@@ -379,7 +380,7 @@ class NotFoundHandler(GeneralHandler):
 class HandlerValidationError(Exception):
     # if a program tries to run a handler that is unable to handle a request
     def __init__(self, cause: Handler):
-        super().__init__(f"Handler '{type(cause)}' is unable to create a response for {cause.path}")
+        super().__init__("Handler '%s' is unable to create a response for {%s}" % (type(cause), cause.path))
 
 
 class Map(dict[str, object]):
@@ -501,7 +502,7 @@ class RecordMap(Map):
             ___ = ""
             for key, value in _.get("order").items():
                 if value > 0:  # ignore a product if the order didn't get any
-                    ___ += f"{key}: {value}<br>"
+                    ___ += "%s: %s<br>" % (key, value)
 
             # time from epoch
             time_local = datetime.fromtimestamp(_.get("time"))

@@ -78,7 +78,7 @@ def get_pizzas_daily():
     for __ in products.get("menu"):  # search menu
         ___ = __.get("id")
         count, total = get_pizza_total_daily(___)
-        _ += f"<li>{___}: {count}, ${round(total, 2)}</li>"
+        _ += "<li>%s: %s, $%s</li>" % (___, count, round(total, 2))
     return _
 
 
@@ -97,7 +97,7 @@ def metrics():
 
 def ping(value: threading.Thread):
     """object communication test"""
-    print(f"Ping from '%s'" % value.name)
+    print("Ping from '%s'" % value.name)
     return "Pong from '%s'" % __name__
 
 
