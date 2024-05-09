@@ -1,4 +1,5 @@
 import json
+import os
 import threading
 from datetime import datetime
 
@@ -155,7 +156,7 @@ def adjust_price_quotient(delivery: bool, member: bool, price: float):
 
 
 if __name__ == "__main__":
-
+    os.chdir(os.path.dirname(os.path.abspath(__name__)))
     # collect save data
     records = unpack("data/order_logs.json").get("orders")
     products = unpack("data/products.json")
