@@ -78,7 +78,7 @@ class WebInterface(BaseHTTPRequestHandler):
     # ExtraExtraSauce md5 in hex-string (0-9,a-f)
     admin_password = "170ac01abbaa03b17bfa0bdd6f2f0863"
 
-    title = "Pizzaaaaaa Yoooooo"
+    title = "PapaPizza"
 
     def do_GET(self):
         """do_GET is called by HTTPServer (or descendants ThreadedHTTPServer) whenever it receives a http-GET request"""
@@ -96,6 +96,7 @@ class WebInterface(BaseHTTPRequestHandler):
                  JSHandler,
                  JPEGHandler,
                  ICOHandler,
+                 PNGHandler,
                  NotFoundHandler]  # The final Handler runs 404 responses
             # for all available handlers
             for __ in _:
@@ -214,11 +215,11 @@ class Handler:
             raise HandlerValidationError(self)
 
 
-class HTMLHandler(Handler):
-    """handles html requests"""
+class GeneralHandler(Handler):
+    """Basic Handle class"""
 
     # MIME type
-    content = "text/html"
+    content = "text/plain"
 
     def build(self, data):
         """A tool that creates the content based on resource data and a 'map' of substitutions"""
@@ -236,6 +237,17 @@ class HTMLHandler(Handler):
     def handle(self):
         data = self.load_string(self.full_path)  # loads file based on full path
         self.submit(code=200, data=bytes(self.build(data), "utf-8"))  # builds and sends data as bytes response code 200
+
+    def validate(self):
+        """This handler can server a request if it is a txt file and its respective file exists"""
+        return (self.path.endswith(".txt")) and os.path.isfile(self.full_path)
+
+
+class HTMLHandler(GeneralHandler):
+    """handles html requests"""
+
+    # MIME type
+    content = "text/html"
 
     def validate(self):
         """This handler can server a request if it is a html file and its respective file exists"""
@@ -284,7 +296,7 @@ class DirectoryHandler(HTMLHandler):
         super().__init__(context, (path if path is not None else context.path) + "/index.html")
 
 
-class ImageHandler(HTMLHandler):
+class ImageHandler(GeneralHandler):
     """simplifies creating image handlers as they all handle the same way"""
 
     def handle(self):
@@ -324,7 +336,7 @@ class ICOHandler(ImageHandler):
         return self.path.endswith(".ico") and os.path.isfile(self.full_path)
 
 
-class StaticFileHandler(HTMLHandler):
+class StaticFileHandler(GeneralHandler):
     """simplifies creating static file handlers as they all handle the same way"""
 
     def handle(self):
@@ -348,13 +360,20 @@ class JSHandler(StaticFileHandler):
         return self.path.endswith(".js") and os.path.isfile(self.full_path)
 
 
-class NotFoundHandler(HTMLHandler):
+class NotFoundHandler(GeneralHandler):
+    # MIME type
+    content = "text/html"
+
     def __init__(self, context: WebInterface):
-        super().__init__(context, "/errors/404.html")
+        super().__init__(context, "/errors/404.htm")
 
     def handle(self):
         data = self.load_string(self.full_path)  # loads file based on full path
         self.submit(code=404, data=bytes(self.build(data), "utf-8"))  # builds and sends data as bytes response code 200
+
+    def validate(self):
+        """This handler can server a request if it is a htm file and its respective file exists"""
+        return (self.path.endswith(".htm")) and os.path.isfile(self.full_path)
 
 
 class HandlerValidationError(Exception):
@@ -363,7 +382,7 @@ class HandlerValidationError(Exception):
         super().__init__(f"Handler '{type(cause)}' is unable to create a response for {cause.path}")
 
 
-class Map(dict[str, str]):
+class Map(dict[str, object]):
     """
     superclass to define the structure of a map
     Maps define the variable based substitutions to make on a webpage, they mock the behavior of dictionaries to
@@ -376,8 +395,6 @@ class Map(dict[str, str]):
         # pull variable sources from calling object
         self._context = context
 
-    # Python calls this function when retrieving dictionary items
-    # "dictionary[item:str] ==> dictionary.__getitem__(item:str)"
     def __getitem__(self, item: str):
         """this executes a child class's function with the name 'item' example path in DefaultMap """
         return self.__getattribute__(item)() if not item.startswith(
@@ -490,16 +507,16 @@ class RecordMap(Map):
             time_local = datetime.fromtimestamp(_.get("time"))
 
             # Table record formatted string
-            __ += ("<tr%s><th scope='row'>%s</th>"+"<td>%s</td>"*7+"</tr>") % (
+            __ += ("<tr%s><th scope='row'>%s</th>" + "<td>%s</td>" * 7 + "</tr>") % (
                 (" class=\"table-success\""
                  if datetime.fromtimestamp(_.get("time")).date() == datetime.now().date() else ""),  # highlight today's
                 i,  # index column
                 _.get("member-id"),  # member id column
                 ___,  # products column
                 _.get("delivery"),  # delivery column
-                _.get("subtotal"),  # subtotal column
+                "${:.2f}".format(_.get("subtotal")),  # subtotal column
                 ("{:.0%}".format(_.get("discount"))),  # discount column
-                _.get("total"),  # total column incl tax
+                "${:.2f}".format(_.get("total")),  # total column incl tax
                 time_local.strftime('%Y-%m-%d %H:%M')  # datetime column
             )
         return __  # full record list as html table
